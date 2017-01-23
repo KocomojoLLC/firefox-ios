@@ -10,6 +10,7 @@ import MessageUI
 import WebImage
 import SwiftKeychainWrapper
 import LocalAuthentication
+import KocomojoSDK
 
 private let log = Logger.browserLogger
 
@@ -43,6 +44,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.launchOptions = launchOptions
 
         log.debug("Configuring window…")
+        
+        // KocomojoSDK
+        let sharedInstance: KocomojoSDK = KocomojoSDK.sharedInstance();
+        sharedInstance.apiKey = "9lKZWgRmmYn3DmzYjnpVrkvFP396uXnFWIdp5vK27w~DEV";
+        sharedInstance.radiusInMiles = 15.0;
+        sharedInstance.showPushNotifications = true;
+        
+
 
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.backgroundColor = UIConstants.AppBackgroundColor
@@ -126,7 +135,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         self.window!.rootViewController = rootViewController
-
+        
+        let button = KocomojoButton(frame: CGRect(x: UIScreen.mainScreen().bounds.size.width - 105, y: 23, width: 65, height: 38))
+        button.disabledImageName = "panelIconSyncedTabs"
+        button.enabledImageName = "panelIconSyncedTabsSelected"
+        rootViewController.view.addSubview(button)
+    
         do {
             log.debug("Configuring Crash Reporting...")
             try PLCrashReporter.sharedReporter().enableCrashReporterAndReturnError()
@@ -211,6 +225,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
         var shouldPerformAdditionalDelegateHandling = true
 
         log.debug("Did finish launching.")

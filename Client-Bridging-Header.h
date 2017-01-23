@@ -12,4 +12,7 @@
 
 #import <CrashReporter/CrashReporter.h>
 
+#import <KocomojoSDK/KocomojoSDK.h>
+
+
 #endif
